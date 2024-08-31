@@ -21,11 +21,11 @@ You can test this bot at:
 
 ## Installation
 
-Follow these steps to set up the `SMD-Telegram-Bot` project on your system.
+Follow these steps to set up the `ZPOTIFY-FA` project on your system.
 
 ### Step 1: Clone the Repository
 
-Open a terminal and clone the `SMD-Telegram-Bot` repository from GitHub:
+Open a terminal and clone the `ZPOTIFY-FA` repository from GitHub:
 
 ```zsh
 apt install git ffmpeg python3 python3-pip -y
