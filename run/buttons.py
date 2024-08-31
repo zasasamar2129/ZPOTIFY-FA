@@ -3,7 +3,7 @@ from run import Button
 
 class Buttons:
     source_code_button = [
-        Button.url(" کد منبع", url="https://github.com/zasasamar2129/SMD")]
+        Button.url(" کد منبع", url="https://github.com/zasasamar2129/ZPOTIFY-FA.git")]
 
     main_menu_buttons = [
         [Button.inline("دستورالعمل ها", b"instructions"), Button.inline("تنظیمات", b"setting")],
