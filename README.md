@@ -1,9 +1,9 @@
-# MusicDownloader-Telegram-Bot
+# SMD Downloader-Bot
 
 MusicDownloader-Telegram-Bot is a Telegram bot that allows users to download music/video from Spotify and YouTube. It provides a convenient way to access and download your favorite tracks/videos directly to your device.
 
 You can test this bot at:
-```telegram.me/spotify_yt_downloader_bot```
+```https://t.me/z_smdbot```
 
 ## Features
 
@@ -21,14 +21,15 @@ You can test this bot at:
 
 ## Installation
 
-Follow these steps to set up the `MusicDownloader-Telegram-Bot` project on your system.
+Follow these steps to set up the `SMD-Telegram-Bot` project on your system.
 
 ### Step 1: Clone the Repository
 
-Open a terminal and clone the `MusicDownloader-Telegram-Bot` repository from GitHub:
+Open a terminal and clone the `SMD-Telegram-Bot` repository from GitHub:
 
 ```zsh
-git clone https://github.com/AdibNikjou/MusicDownloader-Telegram-Bot.git
+apt install git ffmpeg python3 python3-pip -y
+git clone https://github.com/zasasamar2129/SMD.git
 ```
 
 ### Step 2: Install Python Dependencies
@@ -36,8 +37,8 @@ git clone https://github.com/AdibNikjou/MusicDownloader-Telegram-Bot.git
 Navigate to the cloned repository's directory and install the required Python dependencies using `pip`:
 
 ```zsh
-cd MusicDownloader-Telegram-Bot
-pip install -r requirements.txt
+cd SMD
+pip3 install -r requirements.txt
 ```
 
 
@@ -115,8 +116,8 @@ This project is licensed under the MIT License. See the `LICENSE` file for detai
 ## Contact
 
 For any inquiries or feedback, please contact the creator:
-- Telegram: @AdibNikjou
-- Email: adib.n7789@gmail.com
+- Telegram: @Itachi2129
+- Email: zasasamar2129@gmail.com
 
 ## Acknowledgments
 
