@@ -361,7 +361,7 @@ class SpotifyDownloader:
         SpotifyInfoButtons = [
             [Button.inline("دانلود پیش نمایش 30s",
                            data=f"spotify/dl/30s_preview/{link_info['preview_url'].split('?cid')[0].replace('https://p.scdn.co/mp3-preview/', '')}")
-             if link_info['preview_url'] is not None else Button.inline("Download 30s Preview",
+             if link_info['preview_url'] is not None else Button.inline("دانلود پیش نمایش 30s",
                                                                         data=b"unavailable_feature")],
             [Button.inline("دانلود آهنگ", data=f"spotify/dl/music/{link_info['track_id']}")],
             [Button.inline(" دانلود آیکون",
