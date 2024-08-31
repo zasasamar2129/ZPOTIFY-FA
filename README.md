@@ -29,7 +29,7 @@ Open a terminal and clone the `SMD-Telegram-Bot` repository from GitHub:
 
 ```zsh
 apt install git ffmpeg python3 python3-pip -y
-git clone https://github.com/zasasamar2129/SMD.git
+git clone https://github.com/zasasamar2129/ZPOTIFY-FA.git
 ```
 
 ### Step 2: Install Python Dependencies
@@ -37,7 +37,7 @@ git clone https://github.com/zasasamar2129/SMD.git
 Navigate to the cloned repository's directory and install the required Python dependencies using `pip`:
 
 ```zsh
-cd SMD
+cd ZPOTIFY-FA
 pip3 install -r requirements.txt
 ```
 
