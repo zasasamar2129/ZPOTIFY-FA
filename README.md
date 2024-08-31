@@ -1,6 +1,6 @@
-# SMD Downloader-Bot
+# ZPOTIFY-FA
 
-MusicDownloader-Telegram-Bot is a Telegram bot that allows users to download music/video from Spotify and YouTube. It provides a convenient way to access and download your favorite tracks/videos directly to your device.
+ZPOTIFY-FA-Telegram-Bot is a Telegram bot that allows users to download music/video from Spotify and YouTube. It provides a convenient way to access and download your favorite tracks/videos directly to your device.
 
 You can test this bot at:
 ```https://t.me/z_smdbot```
