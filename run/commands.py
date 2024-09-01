@@ -21,7 +21,7 @@ class BotCommandHandler:
         user_already_in_db = await db.check_username_in_database(user_id)
         if not user_already_in_db:
             await db.create_user_settings(user_id)
-        await respond_based_on_channel_membership(event, f"""Hey {sender_name}!👋 \n{BotMessageHandler.start_message}""",
+        await respond_based_on_channel_membership(event, f"""سلام {sender_name}!👋 \n{BotMessageHandler.start_message}""",
                                                   buttons=Buttons.main_menu_buttons)
 
     @staticmethod
@@ -64,7 +64,7 @@ Number of Unsubscribed Users: {number_of_unsubscribed}""")
             user_id = event.sender_id
             music_quality = await db.get_user_music_quality(user_id)
             await respond_based_on_channel_membership(event,
-                                                      f"Your Quality Setting:\nFormat: {music_quality['format']}\nQuality: {music_quality['quality']}\n\nQualities Available :",
+                                                      f"تنظیمات کیفیت شما:\nقالب: {music_quality['format']}\nQuality: {music_quality['quality']}\n\nکیفیت های موجود :",
                                                       buttons=Buttons.get_quality_setting_buttons(music_quality))
 
     @staticmethod
@@ -81,10 +81,10 @@ Number of Unsubscribed Users: {number_of_unsubscribed}""")
         if await update_bot_version_user_season(event):
             user_id = event.sender_id
             if not await db.is_user_subscribed(user_id):
-                await respond_based_on_channel_membership(event, "You are not currently subscribed.")
+                await respond_based_on_channel_membership(event, "شما در حال حاضر مشترک نیستید.")
                 return
             await db.remove_subscribed_user(user_id)
-            await respond_based_on_channel_membership(event, "You have successfully unsubscribed.")
+            await respond_based_on_channel_membership(event, "شما با موفقیت لغو اشتراک کردید.")
 
     @staticmethod
     async def handle_subscribe_command(event):
@@ -92,10 +92,10 @@ Number of Unsubscribed Users: {number_of_unsubscribed}""")
         if await update_bot_version_user_season(event):
             user_id = event.sender_id
             if await db.is_user_subscribed(user_id):
-                await respond_based_on_channel_membership(event, "You are already subscribed.")
+                await respond_based_on_channel_membership(event, "شما قبلا مشترک شده اید.")
                 return
             await db.add_subscribed_user(user_id)
-            await respond_based_on_channel_membership(event, "You have successfully subscribed.")
+            await respond_based_on_channel_membership(event, "شما با موفقیت مشترک شدید.")
 
     @staticmethod
     async def handle_settings_command(event):
@@ -185,27 +185,27 @@ Number of Unsubscribed Users: {number_of_unsubscribed}""")
     @staticmethod
     async def handle_search_command(event):
         if not await update_bot_version_user_season(event):
-            return event.respond("We have updated the bot.\n"
-                                 "please start over using /start command.")
+            return event.respond("ما ربات را به روز کرده ایم.\n"
+                                 "لطفا استفاده را دوباره شروع کنید /start فرمان.")
 
         search_query = event.message.text[8:]
 
         if not search_query.strip():
             await event.respond(
-                "Please provide a search term after the /search command. \nOr simply send me everything you want "
+                "لطفا بعد از عبارت جستجو کنید /search فرمان. \nیا به سادگی هر آنچه را که می خواهید برای من بفرستید "
                 "to Search for.")
             return
 
         waiting_message_search = await event.respond('⏳')
         sanitized_query = await sanitize_query(search_query)
         if not sanitized_query:
-            await event.respond("Your input was not valid. Please try again with a valid search term.")
+            await event.respond("ورودی شما معتبر نبود. لطفاً با یک عبارت جستجوی معتبر دوباره امتحان کنید.")
             return
 
         search_result = await SpotifyDownloader.search_spotify_based_on_user_input(sanitized_query)
         if len(search_result) == 0:
             await waiting_message_search.delete()
-            await event.respond("Sorry, I couldnt Find any music that matches your Search query.")
+            await event.respond("متأسفم، من نتوانستم آهنگی را پیدا کنم که با عبارت جستجوی شما مطابقت داشته باشد.")
             return
 
         button_list = Buttons.get_search_result_buttons(sanitized_query, search_result)
@@ -213,7 +213,7 @@ Number of Unsubscribed Users: {number_of_unsubscribed}""")
         try:
             await event.respond(BotMessageHandler.search_result_message, buttons=button_list)
         except Exception as Err:
-            await event.respond(f"Sorry There Was an Error Processing Your Request: {str(Err)}")
+            await event.respond(f"با عرض پوزش در پردازش درخواست شما خطایی رخ داد: {str(Err)}")
 
         await asyncio.sleep(1.5)
         await waiting_message_search.delete()
