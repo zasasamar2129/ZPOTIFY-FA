@@ -145,7 +145,7 @@ class Bot:
         music_quality = {'format': format, 'quality': quality}
         await db.set_user_music_quality(user_id, music_quality)
         await BotMessageHandler.edit_message(event,
-                                             f"Quality successfully changed.\n\nFormat: {music_quality['format']}"
+                                             f"کیفیت با موفقیت تغییر کرد.\n\nFormat: {music_quality['format']}"
                                              f"\nQuality: {music_quality['quality']}",
                                              buttons=Buttons.get_quality_setting_buttons(music_quality))
 
@@ -153,7 +153,7 @@ class Bot:
     async def change_downloading_core(event, downloading_core):
         user_id = event.sender_id
         await db.set_user_downloading_core(user_id, downloading_core)
-        await BotMessageHandler.edit_message(event, f"Core successfully changed.\n\nCore: {downloading_core}",
+        await BotMessageHandler.edit_message(event, f"هسته با موفقیت تغییر کرد.\n\nCore: {downloading_core}",
                                              buttons=Buttons.get_core_setting_buttons(downloading_core))
 
     @staticmethod
@@ -166,7 +166,7 @@ class Bot:
                 mode_to_show = "Dark"
             case "2":
                 mode_to_show = "Black"
-        await BotMessageHandler.edit_message(event, f"Night mode successfully changed.\n\nNight mode: {mode_to_show}",
+        await BotMessageHandler.edit_message(event, f"حالت شب با موفقیت تغییر کرد.\n\nNight mode: {mode_to_show}",
                                              buttons=Buttons.get_tweet_capture_setting_buttons(mode))
 
     @staticmethod
