@@ -64,6 +64,7 @@ python3 main.py
 ```
   docker build -t musicfa .
   docker run musicfa
+```
 ## Usage
 
 1. Start a conversation with the bot by sending the `/start` command.
