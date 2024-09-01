@@ -60,7 +60,10 @@ With all dependencies installed and environment variables set, you can now run t
 ```zsh
 python3 main.py
 ```
-
+### DOCKER
+```
+  docker build -t musicfa .
+  docker run musicfa
 ## Usage
 
 1. Start a conversation with the bot by sending the `/start` command.
