@@ -1,16 +1,22 @@
-FROM python:3.8-slim-buster
+# Use an official Python runtime as a parent image
+FROM python:3.10
 
+# Install necessary dependencies
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends python3-pip git \
-    && rm -rf /var/lib/apt/lists/*
-RUN pip3 install --upgrade pip
+    && apt install git ffmpeg python3 python3-pip -y
 
-WORKDIR /music-fa
-RUN chmod 777 /music-fa
-RUN apt update && apt upgrade -y && apt install gcc  ffmpeg python3 python3-pip -y
-COPY requirements.txt .
-RUN pip3 install -r requirements.txt
-COPY . .
+# Set the working directory in the container
+WORKDIR /musicfa
+
+# Copy the requirements file and install dependencies
+COPY requirements.txt /musicfa/
+RUN pip3 install --no-cache-dir -r requirements.txt
+
+# Copy the entire project into the container
+COPY . /musicfa
+
+# Expose the port the app runs on
 EXPOSE 8080
 
-CMD ["python3", "-m", "plugins", "run", "utils"]
+# Specify the default command to run your application
+CMD ["python3", "main.py"]
