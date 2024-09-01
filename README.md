@@ -29,7 +29,7 @@ Open a terminal and clone the `ZPOTIFY-FA` repository from GitHub:
 
 ```zsh
 apt install git ffmpeg python3 python3-pip -y
-git clone https://github.com/zasasamar2129/ZPOTIFY-FA.git
+git clone https://github.com/zasasamar2129/zpotify-fa.git
 ```
 
 ### Step 2: Install Python Dependencies
@@ -37,7 +37,7 @@ git clone https://github.com/zasasamar2129/ZPOTIFY-FA.git
 Navigate to the cloned repository's directory and install the required Python dependencies using `pip`:
 
 ```zsh
-cd ZPOTIFY-FA
+cd zpotify-fa
 pip3 install -r requirements.txt
 ```
 
