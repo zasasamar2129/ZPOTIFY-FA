@@ -102,7 +102,7 @@ class Bot:
             b"instructions": lambda e: asyncio.create_task(
                 BotMessageHandler.edit_message(e, Bot.instruction_message, buttons=Bot.back_button)),
             b"back": lambda e: asyncio.create_task(
-                BotMessageHandler.edit_message(e, f"Hey {e.sender.first_name}!👋\n {Bot.start_message}",
+                BotMessageHandler.edit_message(e, f"سلام {e.sender.first_name}!👋\n {Bot.start_message}",
                                                buttons=Bot.main_menu_buttons)),
             b"setting": lambda e: asyncio.create_task(
                 BotMessageHandler.edit_message(e, "Settings :", buttons=Bot.setting_button)),
@@ -175,19 +175,19 @@ class Bot:
         if await db.is_user_subscribed(user_id):
             await db.remove_subscribed_user(user_id)
             if not quite:
-                await BotMessageHandler.edit_message(event, "You have successfully unsubscribed.",
+                await BotMessageHandler.edit_message(event, "شما با موفقیت لغو اشتراک کردید.",
                                                      buttons=Buttons.get_subscription_setting_buttons(
                                                          subscription=False))
             else:
                 await event.respond(
-                    "You have successfully unsubscribed.\nYou Can Subscribe Any Time Using /subscribe command. :)")
+                    "شما با موفقیت لغو اشتراک کردید.\nبا استفاده از هر زمان می توانید مشترک شوید /subscribe فرمان. :)")
 
     @staticmethod
     async def add_subscription(event):
         user_id = event.sender_id
         if not await db.is_user_subscribed(user_id):
             await db.add_subscribed_user(user_id)
-            await BotMessageHandler.edit_message(event, "You have successfully subscribed.",
+            await BotMessageHandler.edit_message(event, "شما با موفقیت مشترک شدید.",
                                                  buttons=Buttons.get_subscription_setting_buttons(subscription=True))
 
     @staticmethod
@@ -310,20 +310,20 @@ class Bot:
             return
 
         waiting_message_search = await event.respond('⏳')
-        process_file_message = await event.respond("Processing Your File ...")
+        process_file_message = await event.respond("در حال پردازش فایل شما ...")
 
         file_path = await event.message.download_media(file=f"{ShazamHelper.voice_repository_dir}")
         shazam_recognized = await ShazamHelper.recognize(file_path)
         if not shazam_recognized:
             await waiting_message_search.delete()
             await process_file_message.delete()
-            await event.respond("Sorry I Couldnt find any song that matches your Voice.")
+            await event.respond("با عرض پوزش من نتوانستم آهنگی را پیدا کنم که با صدای شما مطابقت داشته باشد.")
             return
 
         sanitized_query = await sanitize_query(shazam_recognized)
         if not sanitized_query:
             await waiting_message_search.delete()
-            await event.respond("Sorry I Couldnt find any song that matches your Voice.")
+            await event.respond("با عرض پوزش من نتوانستم آهنگی را پیدا کنم که با صدای شما مطابقت داشته باشد")
             return
 
         search_result = await SpotifyDownloader.search_spotify_based_on_user_input(sanitized_query, limit=10)
@@ -332,7 +332,7 @@ class Bot:
         try:
             await event.respond(Bot.search_result_message, buttons=button_list)
         except Exception as Err:
-            await event.respond(f"Sorry There Was an Error Processing Your Request: {str(Err)}")
+            await event.respond(f"با عرض پوزش در پردازش درخواست شما خطایی رخ داد: {str(Err)}")
 
         await asyncio.sleep(1.5)
         await process_file_message.delete()
@@ -348,7 +348,7 @@ class Bot:
 
         if not info_tuple:  # if getting info of the link failed
             await waiting_message.delete()
-            return await event.respond("Sorry, There was a problem processing your request.")
+            return await event.respond("با عرض پوزش، مشکلی در پردازش درخواست شما وجود داشت.")
 
     @staticmethod
     async def process_text_query(event):
@@ -356,12 +356,12 @@ class Bot:
             return
 
         if len(event.message.text) > 33:
-            return await event.respond("Your Search Query is too long. :(")
+            return await event.respond("درخواست جستجوی شما خیلی طولانی است. :(")
 
         waiting_message_search = await event.respond('⏳')
         sanitized_query = await sanitize_query(event.message.text)
         if not sanitized_query:
-            await event.respond("Your input was not valid. Please try again with a valid search term.")
+            await event.respond("ورودی شما معتبر نبود. لطفاً با یک عبارت جستجوی معتبر دوباره امتحان کنید.")
             return
 
         search_result = await SpotifyDownloader.search_spotify_based_on_user_input(sanitized_query, limit=10)
@@ -370,7 +370,7 @@ class Bot:
         try:
             await event.respond(Bot.search_result_message, buttons=button_list)
         except Exception as Err:
-            await event.respond(f"Sorry There Was an Error Processing Your Request: {str(Err)}")
+            await event.respond(f"با عرض پوزش در پردازش درخواست شما خطایی رخ داد: {str(Err)}")
 
         await asyncio.sleep(1.5)
         await waiting_message_search.delete()
@@ -384,7 +384,7 @@ class Bot:
         search_query = query_data.split("/")[2]
 
         if current_page == "0" or (current_page == "6" and is_playlist):
-            return await event.answer("⚠️ Not available.")
+            return await event.answer("⚠️ موجود نیست.")
 
         if is_playlist:
             search_result = await SpotifyDownloader.get_playlist_tracks(search_query,
@@ -398,7 +398,7 @@ class Bot:
         try:
             await event.edit(buttons=button_list)
         except:
-            await event.answer("⚠️ Not available.")
+            await event.answer("⚠️ موجود نیست.")
 
     @staticmethod
     async def process_x_or_twitter_link(event):
@@ -439,7 +439,7 @@ class Bot:
         try:
             await event.respond(Bot.search_result_message, buttons=button_list)
         except Exception as Err:
-            await event.respond(f"Sorry There Was an Error Processing Your Request: {str(Err)}")
+            await event.respond(f"با عرض پوزش در پردازش درخواست شما خطایی رخ داد:: {str(Err)}")
 
         await asyncio.sleep(1.5)
         await waiting_message_search.delete()
