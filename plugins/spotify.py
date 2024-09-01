@@ -113,13 +113,13 @@ class SpotifyDownloader:
             else:
                 # Handle unsupported Spotify link types
                 link_info = {'type': link_type}
-                print(f"Unsupported Spotify link type provided: {spotify_url}")
+                print(f"نوع پیوند Spotify پشتیبانی نشده ارائه شده است: {spotify_url}")
                 return link_info
 
         except Exception as e:
             # Log and handle any errors encountered during information extraction
-            print(f"Error extracting Spotify information: {e}")
-            await event.respond("An error occurred while processing the Spotify link. Please try again.")
+            print(f"خطا در استخراج اطلاعات Spotify: {e}")
+            await event.respond("هنگام پردازش پیوند Spotify خطایی روی داد. لطفا دوباره امتحان کنید.")
             return {}
 
     @staticmethod
@@ -208,7 +208,7 @@ class SpotifyDownloader:
         # Ensure the user's data is up-to-date
         if not await db.get_user_updated_flag(user_id):
             await event.respond(
-                "Our bot has been updated. Please restart the bot with the /start command."
+                "ربات ما به روز شده است. لطفا ربات را با دستور /start راه اندازی مجدد کنید"
             )
             return True
 
@@ -220,7 +220,7 @@ class SpotifyDownloader:
             return await SpotifyDownloader.send_playlist_info(event.client, event, link_info)
         else:
             await event.respond(
-                f"""Unsupported Spotify link type.\n\nThe Bot is currently supports:\n- track \n- playlist\n\nYou 
+                f"""نوع پیوند Spotify پشتیبانی نشده است.\n\nربات در حال حاضر پشتیبانی می شود:\n- track \n- playlist\n\nYou 
                 requested: {link_info["type"]} """)
             return False
 
@@ -238,9 +238,9 @@ class SpotifyDownloader:
                         img.save(icon_path)
                         return icon_path
                     else:
-                        print(f"Failed to download playlist image. Status code: {response.status}")
+                        print(f"تصویر لیست پخش بارگیری نشد. کد وضعیت: {response.status}")
         except Exception as e:
-            print(f"Error downloading or saving playlist image: {e}")
+            print(f"خطا در دانلود یا ذخیره تصویر لیست پخش: {e}")
 
         return None
 
@@ -258,28 +258,28 @@ class SpotifyDownloader:
 
         # Construct the playlist information text
         playlist_info = (
-            f"🎧 **Playlist: {playlist_name}** 🎶\n\n"
+            f"🎧 **لیست پخش: {playlist_name}** 🎶\n\n"
             f"---\n\n"
-            f"**Details:**\n\n"
+            f"**جزئیات:**\n\n"
 
-            f"  - 👤 Owner: {playlist_owner}\n"
-            f"  - 👥 Followers: {followers}\n"
+            f"  - 👤 مالک: {playlist_owner}\n"
+            f"  - 👥 پیروان: {followers}\n"
 
-            f"  - 🎵 Total Tracks: {total_tracks}\n"
-            f"  - 🤝 Collaborative: {collaborative}\n"
-            f"  - 🌐 Public: {public}\n"
+            f"  - 🎵 کل آهنگ ها: {total_tracks}\n"
+            f"  - 🤝 مشارکتی: {collaborative}\n"
+            f"  - 🌐 عمومی: {public}\n"
 
-            f"  - 🎧 Playlist URL: [Listen On Spotify]({playlist_url})\n"
+            f"  - 🎧 URL لیست پخش: [در Spotify گوش کنید]({playlist_url})\n"
             f"---\n\n"
-            f"**Enjoy the music!** 🎶"
+            f"**از موسیقی لذت ببرید!** 🎶"
         )
 
         # Buttons for interactivity
         buttons = [
-            [Button.inline("Download All Tracks Inside [mp3]", data=f"spotify/dl/playlist/{playlist_id}/all")],
-            [Button.inline("Download Top 10", data=f"spotify/dl/playlist/{playlist_id}/10")],
-            [Button.inline("Search Tracks inside", data=f"spotify/s/playlist/{playlist_id}")],
-            [Button.inline("Cancel", data=b"cancel")]
+            [Button.inline("دانلود تمام آهنگ های داخل [mp3]", data=f"spotify/dl/playlist/{playlist_id}/all")],
+            [Button.inline("دانلود 10 تاپ", data=f"spotify/dl/playlist/{playlist_id}/10")],
+            [Button.inline("جستجوی آهنگ های داخل", data=f"spotify/s/playlist/{playlist_id}")],
+            [Button.inline("لغو", data=b"cancel")]
         ]
 
         # Handle the playlist image if exists
@@ -319,9 +319,9 @@ class SpotifyDownloader:
                             img.save(icon_path)
                         else:
                             print(
-                                f"Failed to download track image for {track_name} - {artist_name}. Status code: {response.status}")
+                                f"تصویر آهنگ برای دانلود نشد {track_name} - {artist_name}. Status code: {response.status}")
             except Exception as e:
-                print(f"Failed to download or save track image for {track_name} - {artist_name}: {e}")
+                print(f"تصویر آهنگ برای دانلود یا ذخیره نشد {track_name} - {artist_name}: {e}")
         return icon_path
 
     @staticmethod
@@ -396,7 +396,7 @@ class SpotifyDownloader:
             )
             return True
         except Exception as Err:
-            print(f"Failed to send track info: {Err}")
+            print(f"اطلاعات آهنگ ارسال نشد: {Err}")
             return False
 
     @staticmethod
@@ -411,11 +411,11 @@ class SpotifyDownloader:
         local_availability_message = None
         if was_local and not is_playlist:
             local_availability_message = await event.respond(
-                "This track is available locally. Preparing it for you now...")
+                "این آهنگ به صورت محلی موجود است اکنون برای شما آماده می شود...")
 
         # Provide feedback to the user during the upload process
         if not is_playlist:
-            upload_status_message = await event.reply("Now uploading... Please hold on.")
+            upload_status_message = await event.reply("در حال آپلود... لطفا صبر کنید.")
 
         try:
             # Indicate ongoing file upload to enhance user experience
@@ -428,7 +428,7 @@ class SpotifyDownloader:
         except Exception as e:
             # Handle exceptions and provide feedback
             await db.set_file_processing_flag(user_id, 0)  # Reset file processing flag
-            await event.respond(f"Unfortunately, uploading failed.\nReason: {e}") if not is_playlist else None
+            await event.respond(f"متأسفانه بارگذاری انجام نشد.\nدلیل: {e}") if not is_playlist else None
             return False  # Returning False signifies the operation didn't complete successfully
 
         # Clean up feedback messages
@@ -472,7 +472,7 @@ class SpotifyDownloader:
         audio_attributes = DocumentAttributeAudio(
             duration=0,
             title=f"{spotify_link_info['track_name']} - {spotify_link_info['artist_name']}",
-            performer="@Spotify_YT_Downloader_BOT",
+            performer="@z_smdbot",
             waveform=None,
             voice=False
         )
@@ -491,8 +491,8 @@ class SpotifyDownloader:
             media,
             caption=(
                     f"🎵 **{spotify_link_info['track_name']}** by **{spotify_link_info['artist_name']}**\n\n"
-                    f"▶️ [Listen on Spotify]({spotify_link_info['track_url']})\n"
-                    + (f"🎥 [Watch on YouTube]({video_url})\n" if video_url else "")
+                    f"▶️ [در Spotify گوش کنید]({spotify_link_info['track_url']})\n"
+                    + (f"🎥 [در یوتیوب تماشا کنید]({video_url})\n" if video_url else "")
             ),
             supports_streaming=True,
             force_document=False,
@@ -513,13 +513,13 @@ class SpotifyDownloader:
                 stdin=asyncio.subprocess.DEVNULL
             )
         except Exception as e:
-            await event.respond(f"Failed to download. Error: {e}")
+            await event.respond(f"دانلود نشد. خطا: {e}")
             await db.set_file_processing_flag(user_id, 0)
             return False
 
         if initial_message is None and not quite:
             # Send an initial message to the user with a progress bar
-            initial_message = await event.reply("SpotDL: Downloading...\nApproach: Piped")
+            initial_message = await event.reply("SpotDL: در حال دانلود...\nApproach: Piped")
         elif quite:
             initial_message = None
 
@@ -534,11 +534,11 @@ class SpotifyDownloader:
 
                 if not quite:
                     if audio_option == "piped":
-                        await message.edit(f"SpotDL: Downloading...\nApproach: Piped\n\n{line}")
+                        await message.edit(f"SpotDL: در حال دانلود...\nApproach: Piped\n\n{line}")
                     elif audio_option == "soundcloud":
-                        await message.edit(f"SpotDL: Downloading...\nApproach: SoundCloud\n\n{line}")
+                        await message.edit(f"SpotDL: در حال دانلود...\nApproach: SoundCloud\n\n{line}")
                     else:
-                        await message.edit(f"SpotDL: Downloading...\nApproach: YouTube\n\n{line}")
+                        await message.edit(f"SpotDL: در حال دانلود...\nApproach: YouTube\n\n{line}")
 
                 # Check for errors
                 if any(err in line for err in (
@@ -547,16 +547,16 @@ class SpotifyDownloader:
                     if audio_option == "piped":
                         if not quite:
                             await message.edit(
-                                f"SpotDL: Downloading...\nApproach: Piped Failed, Using SoundCloud Approach.\n\n{line}")
+                                f"SpotDL: در حال دانلود...\nApproach: Piped Failed, Using SoundCloud Approach.\n\n{line}")
                         return False  # Indicate that an error occurred
                     elif audio_option == "soundcloud":
                         if not quite:
                             await message.edit(
-                                f"SpotDL: Downloading...\nApproach: SoundCloud Failed, Using Youtube Approach.\n\n{line}")
+                                f"SpotDL: در حال دانلود...\nApproach: SoundCloud Failed, Using Youtube Approach.\n\n{line}")
                         return False
                     else:
                         if not quite:
-                            await message.edit(f"SpotDL: Downloading...\nApproach: All Approaches Failed.\n\n{line}")
+                            await message.edit(f"SpotDL: در حال دانلود...\nApproach: All Approaches Failed.\n\n{line}")
                         return False
                 elif not line:
                     return True
@@ -587,7 +587,7 @@ class SpotifyDownloader:
 
         download_message = None
         if not is_playlist:
-            download_message = await event.respond("Downloading .")
+            download_message = await event.respond("در حال دانلود .")
 
         async def get_file_size(video_url):
             ydl_opts = {
@@ -629,19 +629,19 @@ class SpotifyDownloader:
             file_size = await file_size_task
 
             if file_size and file_size > SpotifyDownloader.MAXIMUM_DOWNLOAD_SIZE_MB * 1024 * 1024:
-                await event.respond("Err: File size is more than 50 MB.\nSkipping download.")
+                await event.respond("خطا: حجم فایل بیش از 50 مگابایت است.\nرد شدن از دانلود.")
                 await db.set_file_processing_flag(user_id, 0)
                 return False, None  # Skip the download
 
             if not is_playlist:
-                await download_message.edit("Downloading . .")
+                await download_message.edit("در حال دانلود . .")
 
             download_task = asyncio.create_task(download_audio(video_url, filename, music_quality))
             try:
                 await download_task
                 return True, download_message
             except Exception as ERR:
-                await event.respond(f"Something Went Wrong Processing Your Query.")
+                await event.respond(f"هنگام پردازش درخواست شما مشکلی پیش آمد")
                 await db.set_file_processing_flag(user_id, 0)
                 return False, download_message
 
@@ -661,10 +661,10 @@ class SpotifyDownloader:
             spotify_link = query_data.split("/")[-1][:-1]
 
         if await db.get_file_processing_flag(user_id):
-            await event.respond("Sorry,There is already a file being processed for you.")
+            await event.respond("با عرض پوزش، فایلی در حال پردازش برای شما وجود دارد")
             return True
 
-        fetch_message = await event.respond("Fetching information... Please wait.")
+        fetch_message = await event.respond("در حال واکشی اطلاعات... لطفا منتظر بمانید")
         spotify_link_info = await SpotifyDownloader.extract_data_from_spotify_link(event, spotify_link)
 
         await db.set_file_processing_flag(user_id, 1)
@@ -719,8 +719,8 @@ class SpotifyDownloader:
             if os.path.isfile(file_path) and result:
 
                 if not is_playlist:
-                    download_message = await download_message.edit("Downloading . . . .")
-                    download_message = await download_message.edit("Downloading . . . . .")
+                    download_message = await download_message.edit("در حال دانلود . . . .")
+                    download_message = await download_message.edit("در حال دانلود . . . . .")
 
                     await download_message.delete()
 
@@ -783,15 +783,15 @@ class SpotifyDownloader:
             tracks_info = await SpotifyDownloader.get_playlist_tracks(playlist_id, get_all=True)
         else:
             await db.set_file_processing_flag(event.sender_id, 0)
-            return await event.respond("Sorry, Something went wrong.\ntry again later.")
+            return await event.respond("متأسفیم، مشکلی پیش آمد.\nبعدا دوباره امتحان کنید.")
 
-        start_message = await event.respond("Checking the playlist ....")
+        start_message = await event.respond("چک کردن لیست پخش ....")
 
         batch_size = 10
         track_batches = [tracks_info[i:i + batch_size] for i in range(0, len(tracks_info), batch_size)]
         download_tasks = []
 
-        await start_message.edit("Sending musics.... Please Hold on.")
+        await start_message.edit("ارسال آهنگ .... لطفا صبر کنید.")
 
         for batch in track_batches:
             # Download tracks in the current batch concurrently
@@ -902,7 +902,7 @@ class SpotifyDownloader:
         track_info = SpotifyDownloader.spotify_account.track(track_id=track_id)
         artist_names = ",".join(artist['name'] for artist in track_info['artists'])
 
-        waiting_message = await event.respond("Searching For Lyrics in Genius ....")
+        waiting_message = await event.respond("جستجوی متن آهنگ در Genius ....")
         song = SpotifyDownloader.genius.search_song(
             f""" "{track_info['name']}"+"{artist_names}" """)
         if song:
@@ -910,7 +910,7 @@ class SpotifyDownloader:
             lyrics = song.lyrics
 
             if not lyrics:
-                error_message = "Sorry, I couldn't find the lyrics for this track."
+                error_message = "با عرض پوزش، من نتوانستم متن این آهنگ را پیدا کنم."
                 return await event.respond(error_message)
 
             # Remove 'Embed' and the first line of the lyrics
@@ -951,13 +951,13 @@ class SpotifyDownloader:
                 page_header = f"Page {i}/{len(lyrics_chunks)}\n"
                 if chunk == "``````":
                     await waiting_message.delete() if waiting_message is not None else None
-                    error_message = "Sorry, I couldn't find the lyrics for this track."
+                    error_message = "با عرض پوزش، من نتوانستم متن این آهنگ را پیدا کنم."
                     return await event.respond(error_message)
                 message = metadata + chunk + page_header
                 await event.respond(message, buttons=[Button.inline("Remove", data='cancel')])
         else:
             await waiting_message.delete()
-            error_message = "Sorry, I couldn't find the lyrics for this track."
+            error_message = "با عرض پوزش، من نتوانستم متن این آهنگ را پیدا کنم."
             return await event.respond(error_message)
 
     @staticmethod
@@ -967,7 +967,7 @@ class SpotifyDownloader:
             image_url = "https://i.scdn.co/image/" + query_data.split("/")[-1][:-1]
             await event.respond(file=image_url)
         except Exception:
-            await event.reply("An error occurred while processing your request. Please try again later.")
+            await event.reply("هنگام پردازش درخواست شما خطایی روی داد. لطفاً بعداً دوباره امتحان کنید.")
 
     @staticmethod
     async def get_playlist_tracks(playlist_id, limit: int = 10, get_all: bool = False):
