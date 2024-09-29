@@ -1,3 +1,4 @@
+from flask import Flask
 from telethon import TelegramClient, events
 from telethon.tl.custom import Button
 from telethon.tl.functions.channels import GetParticipantsRequest
@@ -12,3 +13,13 @@ from .version_checker import update_bot_version_user_season
 from .channel_checker import is_user_in_channel, handle_continue_in_membership_message, \
     respond_based_on_channel_membership
 from .bot import Bot
+
+
+app = Flask(__name__)
+
+@app.route('/alive')
+def alive():
+    return "I am alive!"
+
+def run_flask():
+    app.run(host='0.0.0.0', port=10000)
