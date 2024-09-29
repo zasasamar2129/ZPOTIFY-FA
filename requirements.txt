@@ -12,3 +12,4 @@ FastTelethonhelper
 lxml
 webdriver_manager
 selenium
+Flask==2.1.2
